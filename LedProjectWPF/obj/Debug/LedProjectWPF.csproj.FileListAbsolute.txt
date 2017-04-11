@@ -1,0 +1,16 @@
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\bin\Debug\LedProjectWPF.exe.config
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\bin\Debug\LedProjectWPF.exe
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\bin\Debug\LedProjectWPF.pdb
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF.csprojResolveAssemblyReference.cache
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\MainWindow.g.cs
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\App.g.cs
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF_MarkupCompile.cache
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF_MarkupCompile.lref
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\MainWindow.baml
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF.g.resources
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF.Properties.Resources.resources
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF.csproj.GenerateResource.Cache
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF.exe
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\obj\Debug\LedProjectWPF.pdb
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\bin\Debug\CUE.NET.dll
+M:\Users\Joseph\Git Repos\LedProjectWPF\LedProjectWPF\bin\Debug\CUE.NET.xml
