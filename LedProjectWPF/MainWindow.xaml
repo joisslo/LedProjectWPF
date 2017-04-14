@@ -5,11 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LedProjectWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="540.849">
     <Grid>
-        <Button x:Name="LightsOffButton" Content="Lights Off" HorizontalAlignment="Left" Margin="74,65,0,0" VerticalAlignment="Top" Width="75" Click="LightsOffButton_Click"/>
-        <Button x:Name="FadeColorsButton" Content="Fade Colors" HorizontalAlignment="Left" Margin="96,124,0,0" VerticalAlignment="Top" Width="75" Click="FadeColorsButton_Click"/>
-        <Button x:Name="SyncWithCorsairKeyboard" Content="Sync" HorizontalAlignment="Left" Margin="149,193,0,0" VerticalAlignment="Top" Width="75" Click="SyncWithCorsairKeyboard_Click"/>
+        <Border x:Name="SyncExperimentationBorder" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="299" Margin="269,10,-6,0" VerticalAlignment="Top" Width="254">
+            <Label x:Name="SyncBorderLabel" Content="Sync Experimentation" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,9,0,0" FontWeight="Bold" FontSize="14" Width="160" />
+        </Border>
 
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="299" Margin="10,10,0,0" VerticalAlignment="Top" Width="254">
+            <Label x:Name="VideoCardBorderLabel" Content="Gaphics Card Testing" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="57,9,0,0" FontWeight="Bold" FontSize="14" />
+        </Border>
+
+        <Button x:Name="LightsOffButton" Content="Lights Off" HorizontalAlignment="Left" Margin="156,76,0,0" VerticalAlignment="Top" Width="101" Click="LightsOffButton_Click" />
+        <Button x:Name="FadeColorsButton" Content="Fade Colors" HorizontalAlignment="Left" Margin="156,101,0,0" VerticalAlignment="Top" Width="101" Click="FadeColorsButton_Click" />
+        <Button x:Name="SyncWithCorsairKeyboard" Content="Sync" HorizontalAlignment="Left" Margin="156,126,0,0" VerticalAlignment="Top" Width="101" Click="SyncWithCorsairKeyboard_Click" />
+        <ComboBox x:Name="Color_Choice_ComboBox" HorizontalAlignment="Left" Margin="156,49,0,0" VerticalAlignment="Top" Width="101"  SelectionChanged="Color_Choice_ComboBox_SelectionChanged" SelectedValuePath="Content" SelectedIndex="3">
+            <ComboBoxItem Background="{x:Null}" Content="Red" />
+            <ComboBoxItem Background="{x:Null}" Content="Green" />
+            <ComboBoxItem Background="{x:Null}" Content="Blue" />
+            <ComboBoxItem Content="Off" />
+        </ComboBox>
+        <Button x:Name="RedFade" Content="Red Fade" HorizontalAlignment="Left" Margin="156,151,0,0" VerticalAlignment="Top" Width="101" Click="RedFade_Click" />
+        <Label x:Name="VideoCardComboBoxLabel" Content="Solid Color" HorizontalAlignment="Left" Margin="63,47,0,0" VerticalAlignment="Top" />
+        <Label x:Name="VideoCardLightsOffLabel" Content="Turn LEDs Off" HorizontalAlignment="Left" Margin="49,73,0,0" VerticalAlignment="Top" />
+        <Label x:Name="SpectrumFadeLabel" Content="Rainbow Spectrum" HorizontalAlignment="Left" Margin="21,98,0,0" VerticalAlignment="Top" />
+        <Label x:Name="SyncGraphicsCardToKeyboardLabel" Content="Don't Use" HorizontalAlignment="Left" Margin="69,123,0,0" VerticalAlignment="Top" />
+        <Label x:Name="RedFadeLabel" Content="Breathing Red" HorizontalAlignment="Left" Margin="46,148,0,0" VerticalAlignment="Top" />
+        <Label x:Name="CustomRainbowLabel" Content="Custom Rainbow" HorizontalAlignment="Left" Margin="31,173,0,0" VerticalAlignment="Top" />
+        <Button x:Name="CustomRainbowButton" Content="Custom Rainbow" HorizontalAlignment="Left" Margin="156,176,0,0" VerticalAlignment="Top" Width="101" Click="CustomRainbowButton_Click" />
+        <Label x:Name="RainbowSyncLabel" Content="Rainbow Sync" HorizontalAlignment="Left" Margin="310,173,0,0" VerticalAlignment="Top" />
+        <Button x:Name="RainbowSyncButton" Content="Rainbow Sync" HorizontalAlignment="Left" Margin="408,176,0,0" VerticalAlignment="Top" Width="107" Click="CustomRainbowSync_Click" />
     </Grid>
 </Window>

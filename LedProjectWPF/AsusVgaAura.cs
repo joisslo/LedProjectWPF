@@ -11,16 +11,20 @@ namespace AsusVgaAura
         Strobe = 0x03,
         CrossfadeColorSpectrum = 0x04
     }
+
     [StructLayout(LayoutKind.Explicit)]
     public struct LedColor
     {
         [FieldOffset(0)]
         public UInt32 Red;
+
         [FieldOffset(4)]
         public UInt32 Green;
+
         [FieldOffset(8)]
         public UInt32 Blue;
     }
+
     [StructLayout(LayoutKind.Explicit, Size = 64)]
     public struct InteropLedInfo
     {

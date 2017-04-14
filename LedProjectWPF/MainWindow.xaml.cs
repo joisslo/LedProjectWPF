@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CUE.NET;
+using CUE.NET.Devices.Generic.Enums;
+using CUE.NET.Devices.Keyboard;
+using CUE.NET.Exceptions;
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using CUE.NET;
-using CUE.NET.Devices.Keyboard;
-using CUE.NET.Exceptions;
-using CUE.NET.Devices.Generic.Enums;
 
 namespace LedProjectWPF
 {
@@ -26,6 +16,9 @@ namespace LedProjectWPF
     public partial class MainWindow : Window
     {
         public AsusVgaAura.AsusVgaAuraWrapper graphicsCard = new AsusVgaAura.AsusVgaAuraWrapper();
+        private CorsairKeyboard keyboard;
+        public int MILLI_DELAY = 1;
+        public bool killFade = true;
 
         public MainWindow()
         {
@@ -34,8 +27,7 @@ namespace LedProjectWPF
             {
                 CueSDK.Initialize();
                 Debug.WriteLine("Initialized with " + CueSDK.LoadedArchitecture + "-SDK");
-
-                CorsairKeyboard keyboard = CueSDK.KeyboardSDK;
+                keyboard = CueSDK.KeyboardSDK;
                 if (keyboard == null)
                     throw new WrapperException("No Keyboard Found");
             }
@@ -49,23 +41,195 @@ namespace LedProjectWPF
             }
         }
 
-        private void LightsOffButton_Click(object sender, RoutedEventArgs e)
+        private async Task KillTheLights()
         {
+            killFade = true;
+            await PutTaskDelay(60);
+            Debug.WriteLine("Turning Lights Off.");
             graphicsCard.DisableLights();
+        }
+
+        private async void LightsOffButton_Click(object sender, RoutedEventArgs e)
+        {
+            await KillTheLights();
         }
 
         private void FadeColorsButton_Click(object sender, RoutedEventArgs e)
         {
+            killFade = true;
             graphicsCard.SetCrossFade();
         }
 
-        private void SyncWithCorsairKeyboard_Click(object sender, RoutedEventArgs e)
+        //Async Method so the program doesn't freeze up while continually
+        //updating the graphics Card
+        private async Task PutTaskDelay()
+        {
+            await Task.Delay(MILLI_DELAY);
+        }
+
+        private async Task PutTaskDelay(int delayMillis)
+        {
+            await Task.Delay(delayMillis);
+        }
+
+        //Async Method continued from above
+        //Breathing effect, only in red for right now
+        private async void RedFade_Click(object sender, RoutedEventArgs e)
+        {
+            await KillTheLights();
+            killFade = false;
+            byte red = 0;
+            while (!killFade)
+            {
+                while (red < 255 && !killFade)
+                {
+                    graphicsCard.SetColor(red += 1, 0, 0);
+                    Log("Going Up. red = " + red);
+                    await PutTaskDelay();
+                }
+                while (red > 0 && !killFade)
+                {
+                    graphicsCard.SetColor(red -= 1, 0, 0);
+                    Log("Going Down. red = " + red);
+                    await PutTaskDelay();
+                }
+            }
+        }
+
+        //Async method continued from above
+        //Custom rainbow spectrum fading
+        private async void CustomRainbowButton_Click(object sender, RoutedEventArgs e)
+        {
+            await KillTheLights();
+            killFade = false;
+            byte red = 255, green = 0, blue = 0;
+            while (!killFade)
+            {
+                if (red > 0 && blue == 0)
+                {
+                    red--;
+                    green++;
+                }
+                if (green > 0 && red == 0)
+                {
+                    green--;
+                    blue++;
+                }
+                if (blue > 0 && green == 0)
+                {
+                    blue--;
+                    red++;
+                }
+                graphicsCard.SetColor(red, green, blue);
+                Log("(R, G, B) = (" + red + ", " + green + ", " + blue + ")");
+                await PutTaskDelay();
+            }
+        }
+
+        //Async method continued from above
+        //Custom rainbow spectrum sync with keyboard
+        private async void CustomRainbowSync_Click(object sender, RoutedEventArgs e)
+        {
+            //CustomRainbowButton_Click(sender, e);
+            await KillTheLights();
+            killFade = false;
+            byte red = 255, green = 0, blue = 0;
+            while (!killFade)
+            {
+                if (red > 0 && blue == 0)
+                {
+                    red--;
+                    green++;
+                }
+                if (green > 0 && red == 0)
+                {
+                    green--;
+                    blue++;
+                }
+                if (blue > 0 && green == 0)
+                {
+                    blue--;
+                    red++;
+                }
+                graphicsCard.SetColor(red, green, blue);
+                Log("(R, G, B) = (" + red + ", " + green + ", " + blue + ")");
+                //TODO: Keyboard Stuff
+                CUE.NET.Devices.Generic.CorsairColor c = new CUE.NET.Devices.Generic.CorsairColor(red, green, blue);
+                keyboard['A'].Color = c;
+                keyboard.Update();
+                await PutTaskDelay();
+            }
+        }
+
+        //Async Method continued from above
+        private async void SyncWithCorsairKeyboard_Click(object sender, RoutedEventArgs e)
         {
             graphicsCard.DisableLights();
-            CorsairKeyboard keyboard = CueSDK.KeyboardSDK;
             Debug.WriteLine("Keyboard Found: " + CueSDK.IsSDKAvailable(CorsairDeviceType.Keyboard));
-            int r = keyboard['A'].Color.R;
-            graphicsCard.SetColor(r, g, b);
+            killFade = false;
+            while (!killFade)
+            {
+                byte r = keyboard['A'].Color.R;
+                byte g = keyboard['A'].Color.G;
+                byte b = keyboard['A'].Color.B;
+                graphicsCard.SetColor(r, g, b);
+                await PutTaskDelay();
+                Debug.WriteLine("Color Values: (" + r + ", " + g + ", " + b + ")");
+            }
+        } //End async methods
+
+        //Static color selection with a combobox
+        private void Color_Choice_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            killFade = true;
+            string selected = this.Color_Choice_ComboBox.SelectedValue.ToString();
+            if (selected == "Off")
+            {
+                graphicsCard.DisableLights();
+            }
+            else if (selected == "Red")
+            {
+                graphicsCard.SetColor(255, 0, 0);
+            }
+            else if (selected == "Green")
+            {
+                graphicsCard.SetColor(0, 255, 0);
+            }
+            else if (selected == "Blue")
+            {
+                graphicsCard.SetColor(0, 0, 255);
+            }
         }
+
+        private static void Log(string message)
+        {
+            System.Diagnostics.Debug.WriteLine(DateTime.Now + ": " + message);
+        }
+
+        private static void OnTimerElapsed(object state)
+        {
+            Log("Timer Elapsed.");
+        }
+
+        //private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        //{
+        //    MILLI_DELAY = (int)RedFadeTimer.Value;
+        //}
+
+        //private async void Audio_Click(object sender, RoutedEventArgs e)
+        //{
+        //    AudioNodeListener listener = new AudioNodeListener();
+        //    killFade = false;
+        //    while (!killFade)
+        //    {
+        //        byte r = (byte)listener.DopplerVelocity.X;
+        //        byte g = (byte)listener.DopplerVelocity.Y;
+        //        byte b = (byte)listener.DopplerVelocity.Z;
+        //        Log(listener.Position.X + "");
+        //        Log(listener.Orientation.X + "");
+        //        Log("R: " + r + ", G: " + g + ", B: " + b);
+        //        await PutTaskDelay();
+        //    }
+        //}
     }
 }
