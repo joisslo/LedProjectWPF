@@ -26,6 +26,7 @@ namespace LedProjectWPF
             try
             {
                 CueSDK.Initialize();
+                CueSDK.UpdateMode = UpdateMode.Continuous; //Set the keyboard to update itself every33.3 milliseconds;
                 Debug.WriteLine("Initialized with " + CueSDK.LoadedArchitecture + "-SDK");
                 keyboard = CueSDK.KeyboardSDK;
                 if (keyboard == null)
@@ -151,12 +152,17 @@ namespace LedProjectWPF
                     blue--;
                     red++;
                 }
-                graphicsCard.SetColor(red, green, blue);
+
                 Log("(R, G, B) = (" + red + ", " + green + ", " + blue + ")");
                 //TODO: Keyboard Stuff
                 CUE.NET.Devices.Generic.CorsairColor c = new CUE.NET.Devices.Generic.CorsairColor(red, green, blue);
-                keyboard['A'].Color = c;
-                keyboard.Update();
+                //keyboard['A'].Color = c;
+                //CUE.NET.Groups.RectangleLedGroup leds = new CUE.NET.Groups.RectangleLedGroup(keyboard, CorsairLedId.Escape, CorsairLedId.KeypadEnter);
+                //keyboard.AttachLedGroup(leds);
+                CUE.NET.Brushes.SolidColorBrush color = new CUE.NET.Brushes.SolidColorBrush(c);
+                keyboard.Brush = color;
+                graphicsCard.SetColor(red, green, blue);
+                //keyboard.Update();
                 await PutTaskDelay();
             }
         }
@@ -209,6 +215,12 @@ namespace LedProjectWPF
         private static void OnTimerElapsed(object state)
         {
             Log("Timer Elapsed.");
+        }
+
+        private void RainowDelaySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            MILLI_DELAY = (int)e.NewValue;
+            Log("Delay changed to " + MILLI_DELAY);
         }
 
         //private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)

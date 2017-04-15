@@ -34,5 +34,6 @@
         <Button x:Name="CustomRainbowButton" Content="Custom Rainbow" HorizontalAlignment="Left" Margin="156,176,0,0" VerticalAlignment="Top" Width="101" Click="CustomRainbowButton_Click" />
         <Label x:Name="RainbowSyncLabel" Content="Rainbow Sync" HorizontalAlignment="Left" Margin="310,173,0,0" VerticalAlignment="Top" />
         <Button x:Name="RainbowSyncButton" Content="Rainbow Sync" HorizontalAlignment="Left" Margin="408,176,0,0" VerticalAlignment="Top" Width="107" Click="CustomRainbowSync_Click" />
+        <Slider x:Name="RainowDelaySlider" HorizontalAlignment="Left" Margin="310,204,0,0" VerticalAlignment="Top" Width="205" Maximum="500" Minimum="1" Value="1" ValueChanged="RainowDelaySlider_ValueChanged" LargeChange="10" SmallChange="1" />
     </Grid>
 </Window>
